@@ -39,7 +39,7 @@
     
 *   Immagine ISO Proxmox VE più recente
     
-*   Immagini ISO/Template per NAS e PBS (es. TrueNAS CORE, Proxmox Backup Server)
+*   Immagini ISO/Template per NAS e PBS (es. OpenMediaVault, Proxmox Backup Server)
     
 *   Cavi e adattatori per dischi interni/esterni
     
@@ -51,7 +51,7 @@
 
 1.  **Preparazione USB di installazione**
     
-    *   Scarica Proxmox VE ISO dal sito ufficiale
+    *   Scaricare Proxmox VE ISO dal sito ufficiale
         
     *   Creare USB bootable con balenaEtcher o Rufus
         
@@ -67,9 +67,9 @@
     
 4.  **Configurazione rete**
     
-    *   Assicurati che il nodo abbia IP statico
+    *   IP statico sul nodo
         
-    *   Configura /etc/hosts per risolvere hostname locale
+    *   Configurare /etc/hosts per risolvere hostname locale
         
 
 4\. Creazione delle VM
@@ -77,33 +77,28 @@
 
 ### 4.1 NAS (OMV) VM
 
-*   Passaggio disco SATA in passthrough
+*   Passaggio disco SATA in passthrough (da CLI)
     
 *   Installazione di OpenMediaVault (OVM)
+
+*   Installazione di plugin aggiuntivi (LVM2, S3, etc...)
     
-*   Creazione del volume su HDD SATA
-    
-*   Esportazione NFS/Block Volume verso Proxmox
+*   Creazione del volume group su HDD SATA
+
+*   Creazione LV, filesystem e share NFS
     
 *   Configurazione utenti/permessi
     
 
 ### 4.2 PBS VM
 
-*   Passaggio disco USB 2TB in passthrough
+*   Passaggio disco USB 2TB in passthrough (da GUI)
     
-*   Installazione Proxmox Backup Server
+*   Installazione Proxmox Backup Server con disco OS su datastore locale del nodo
     
-*   Creazione datastore sul disco USB
+*   Creazione datastore per backup sul disco USB
     
 *   Configurazione backup schedulato di tutte le VM
-    
-
-### 4.3 VM/LXC di servizio
-
-*   Creazione template VM/LXC su NVMe
-    
-*   Configurazione repository VM sul NAS (NFS/Block)
     
 
 5\. Configurazione Repository Proxmox
@@ -111,7 +106,7 @@
 
 1.  Datacenter → Storage → Add → NFS
     
-    *   Path: IP\_NAS:/mnt/nas\_volume
+    *   Path: *IP_NAS*:/eport/**nfs-share**
         
     *   Abilitare VM Disk, ISO, Backup
         
@@ -135,19 +130,17 @@
     
     1.  **Disco USB PBS guasto**
         
-        *   Sostituire disco
+        *   Sostituire disco e aggiornare il passthrough alla VM PBS
             
-        *   Reinstallare PBS VM
-            
-        *   Riagganciare backup precedente
+        *   Da PBS, ricreare datastore di backup e iniziare una nuova catena di backup da zero
             
     2.  **Disco SATA NAS guasto**
         
-        *   Sostituire disco
+        *   Sostituire disco e aggiornare il passthrough alla VM NAS
             
-        *   Reinstallare NAS VM
+        *   Ricreare VG, LV e share NFS da zero
             
-        *   Ripristinare volume dal backup PBS
+        *   Ripristinare i dischi delle VM dal backup PBS
             
 
 7\. Monitoraggio Hardware
