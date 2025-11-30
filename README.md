@@ -112,7 +112,19 @@
         
 2.  **Aggiungere datastore per PBS**
     
-    *   PBS → Datastore → Add → Path (disco USB passthrough)
+    *   Creare il filesystem:
+  
+        *   PBS → Storage / Disks → Directory → Create: *Directory*
+     
+        *   Device: selezionare il disco (es. /dev(sdb)
+     
+        *   Filesystem: XFS va bene per dati di grandi dimensioni come i dischi delle VM
+     
+        *   Add as datastore: true
+     
+        *   Removable datastore: true
+    
+    *   Il nuovo filesystem verrà aggiunto come datastore di backup
         
     *   Configurare backup jobs per tutte le VM
         
