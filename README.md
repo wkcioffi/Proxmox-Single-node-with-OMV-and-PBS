@@ -11,6 +11,8 @@
 - Creazione VM
   - [OpenMediaVault](/proxmox-single-node-with-omv-and-pbs/omv/omv.md)
   - [Proxmox Backup Server](/proxmox-single-node-with-omv-and-pbs/pbs/pbs.md)
+  - [Pi-hole LXC](/proxmox-single-node-with-omv-and-pbs/services/pihole/pihole.md)
+  - [Docker](/proxmox-single-node-with-omv-and-pbs/services/docker.md)
 - [Backup e Restore](/proxmox-single-node-with-omv-and-pbs/backup-restore/backup-restore.md)
 - [Monitoraggi](/proxmox-single-node-with-omv-and-pbs/monitoring/monitoring.md)
 
